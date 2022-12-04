@@ -24,7 +24,7 @@ typedef struct s_fork
 	pthread_mutex_t	mutex;
 }	t_fork;
 
-typedef struct s_info
+typedef struct s_global_info
 {
 	int		num_of_philo;
 	int		time_to_die;
@@ -33,11 +33,12 @@ typedef struct s_info
 	int		num_of_times_each_philo_must_eat;
 	t_philo	*philos;
 	t_fork	*forks;
-}	t_info;
+}	t_global_info;
 
 // cmdline_arguments.c
 int		validate_argument_count(int argc);
-int		set_cmdline_arguments(int argc, char **argv, t_info *info);
+int		set_cmdline_arguments(int argc, char **argv, t_global_info *info);
+int		is_each_cmdline_arguments_valid(t_global_info *info);
 
 // utils.c
 size_t	ft_strlen(const char *s);
