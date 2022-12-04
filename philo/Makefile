@@ -42,5 +42,5 @@ re: fclean all
 
 .PHONY: norm
 norm:
-	-@norminette includes/
-	-@norminette srcs/
+	-@norminette includes/ | grep -v "INVALID_HEADER"
+	-@norminette srcs/ | grep -v "INVALID_HEADER"
