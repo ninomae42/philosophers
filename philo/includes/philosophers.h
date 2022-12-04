@@ -11,18 +11,19 @@
 # include <limits.h>
 # include <unistd.h>
 
+typedef pthread_mutex_t	t_fork;
+
 typedef struct s_philo
 {
-	int			id;
-	pthread_t	thread;
-	bool		is_die;
-}	t_philo;
-
-typedef struct s_fork
-{
 	int				id;
-	pthread_mutex_t	mutex;
-}	t_fork;
+	pthread_t		thread;
+	pthread_mutex_t	access_mutex;
+	pthread_mutex_t	*syslog_mutex;
+	t_fork			*right_fork;
+	t_fork			*left_fork;
+	long long		last_eat_time_in_usec;
+	size_t			eat_cnt;
+}	t_philo;
 
 typedef struct s_global_info
 {
@@ -33,6 +34,7 @@ typedef struct s_global_info
 	int		num_of_times_each_philo_must_eat;
 	t_philo	*philos;
 	t_fork	*forks;
+	pthread_mutex_t	syslog_mutex;
 }	t_global_info;
 
 // cmdline_arguments.c
