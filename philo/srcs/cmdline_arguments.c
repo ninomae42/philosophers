@@ -30,7 +30,7 @@ int	set_cmdline_arguments(int argc, char **argv, t_global_info *info)
 			return (1);
 	}
 	else
-		info->num_of_times_each_philo_must_eat = -1;
+		info->num_of_times_each_philo_must_eat = 0;
 	return (0);
 }
 
