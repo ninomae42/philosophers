@@ -13,7 +13,7 @@ int	validate_argument_count(int argc)
 	return (0);
 }
 
-int	set_cmdline_arguments(int argc, char **argv, t_info *info)
+int	set_cmdline_arguments(int argc, char **argv, t_global_info *info)
 {
 	if (do_atoi_and_set_safely(argv[1], &(info->num_of_philo)) != 0)
 		return (1);
@@ -30,7 +30,19 @@ int	set_cmdline_arguments(int argc, char **argv, t_info *info)
 			return (1);
 	}
 	else
-		info->num_of_times_each_philo_must_eat = -1;
+		info->num_of_times_each_philo_must_eat = 0;
+	return (0);
+}
+
+int	is_each_cmdline_arguments_valid(t_global_info *info)
+{
+	if (info->num_of_philo < 0 || info->time_to_die < 0
+		|| info->time_to_eat < 0 || info->time_to_sleep < 0
+		|| info->num_of_times_each_philo_must_eat < 0)
+	{
+		ft_puterr(ERR_ARG_SIGN);
+		return (1);
+	}
 	return (0);
 }
 
