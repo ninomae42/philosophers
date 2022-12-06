@@ -20,6 +20,11 @@
 # define ERR_THREAD_JOIN "[Error] Couldn't join threads"
 # define ERR_THREAD_DETATCH "[Error] Couldn't detatch threads"
 
+# define USEC_TO_MSEC 1000
+# define MSEC_TO_SEC 1000
+# define SEC_TO_MSEC 1000
+# define MSEC_TO_USEC 1000
+
 # define LOG_FORK 1
 # define LOG_EAT 2
 # define LOG_SLEEP 3
@@ -97,6 +102,13 @@ int		philo_take_two_forks(t_philo *philo);
 int		philo_release_two_forks(t_philo *philo);
 int		take_left_fork(t_philo *philo);
 int		take_right_fork(t_philo *philo);
+
+// time.c
+t_time	get_current_time_in_usec(void);
+t_time	get_current_time_in_msec(void);
+int		ft_usleep(unsigned int usec);
+int		ft_msleep(unsigned int msec);
+t_time	get_time_difference(t_philo *philo);
 
 // cmdline_arguments.c
 int		validate_argument_count(int argc);
