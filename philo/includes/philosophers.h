@@ -20,6 +20,11 @@
 # define ERR_THREAD_JOIN "[Error] Couldn't join threads"
 # define ERR_THREAD_DETATCH "[Error] Couldn't detatch threads"
 
+# define LOG_FORK 1
+# define LOG_EAT 2
+# define LOG_SLEEP 3
+# define LOG_THINK 4
+
 # define STATUS_INIT 0
 # define STATUS_RUNNING 1
 
@@ -76,10 +81,23 @@ int		join_philo_threads(t_info *info);
 
 // thread_utils.c
 int		detach_all_threads(t_info *info, size_t n);
+int		print_philo_log(t_philo *philo, int log_type, long long current_time);
 
 // philo_threads_routine.c
 void	*routine_philo(void *arg);
 void	*routine_single_philo(void *arg);
+
+// philo_actions.c
+int		philo_eat(t_philo *philo);
+int		philo_sleep(t_philo *philo);
+int		philo_think(t_philo *philo);
+
+// philo_actions2.c
+int		philo_take_two_forks(t_philo *philo);
+int		philo_release_two_forks(t_philo *philo);
+int		take_left_fork(t_philo *philo);
+int		take_right_fork(t_philo *philo);
+
 // cmdline_arguments.c
 int		validate_argument_count(int argc);
 int		set_cmdline_arguments(int argc, char **argv, t_global_info *info);
