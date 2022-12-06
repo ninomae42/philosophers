@@ -40,8 +40,7 @@ int	is_each_cmdline_arguments_valid(t_global_info *info)
 		|| info->time_to_eat < 0 || info->time_to_sleep < 0
 		|| info->num_of_times_each_philo_must_eat < 0)
 	{
-		ft_puterr(
-			"[Error] each argument must be a positive integer number");
+		ft_puterr(ERR_ARG_SIGN);
 		return (1);
 	}
 	return (0);
