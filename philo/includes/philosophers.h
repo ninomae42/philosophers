@@ -103,6 +103,10 @@ int		philo_release_two_forks(t_philo *philo);
 int		take_left_fork(t_philo *philo);
 int		take_right_fork(t_philo *philo);
 
+// monitor.c
+void	*routine_monitor(void *arg);
+int		create_join_monitor_thread(t_info *info, pthread_t *monitor);
+
 // time.c
 t_time	get_current_time_in_usec(void);
 t_time	get_current_time_in_msec(void);
