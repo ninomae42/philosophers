@@ -50,6 +50,10 @@ typedef struct s_info
 	bool			is_simulation_stop;
 }	t_info;
 
+typedef t_info			t_global_info;
+
+// initializer.c
+t_info	*init_global_info(int argc, char **argv);
 // cmdline_arguments.c
 int		validate_argument_count(int argc);
 int		set_cmdline_arguments(int argc, char **argv, t_global_info *info);
