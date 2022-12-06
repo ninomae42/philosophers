@@ -11,6 +11,14 @@
 # include <limits.h>
 # include <unistd.h>
 
+# define ERR_MEM "[Error] Couldn't allocate memory"
+# define ERR_ARGS "[Error] Invalid argument found in cmdline arguments"
+# define ERR_ARG_SIGN "[Error] Each argument must be positive integer number"
+# define ERR_MTX_INIT "[Error] Couldn't initialize mutex"
+# define ERR_MTX_DESTROY "[Error] Couldn't destroy mutex"
+# define ERR_THREAD_CREATE "[Error] Couldn't create threads"
+# define ERR_THREAD_JOIN "[Error] Couldn't join threads"
+# define ERR_THREAD_DETATCH "[Error] Couldn't detatch threads"
 typedef pthread_mutex_t	t_fork;
 typedef long long		t_time;
 typedef struct s_info	t_info;
