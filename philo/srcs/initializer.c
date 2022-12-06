@@ -53,3 +53,24 @@ void	free_global_info(t_info *info)
 	free(info);
 }
 
+void	init_philos(t_info *info)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < (size_t)info->num_of_philo)
+	{
+		info->philos[i].id = i + 1;
+		info->philos[i].eat_cnt = 0;
+		info->philos[i].last_eat_time_in_usec = 0;
+		info->philos[i].syslog_mutex = &(info->syslog_mutex);
+		info->philos[i].info = info;
+		info->philos[i].status = STATUS_INIT;
+		info->philos[i].right_fork = &(info->forks[i]);
+		if (i == 0)
+			info->philos[i].left_fork = &(info->forks[info->num_of_philo - 1]);
+		else
+			info->philos[i].left_fork = &(info->forks[i - 1]);
+		i++;
+	}
+}

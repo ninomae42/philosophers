@@ -38,5 +38,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (init_all_mutexes(info) != 0)
 		return (EXIT_FAILURE);
+	init_philos(info);
 	return (EXIT_SUCCESS);
 }

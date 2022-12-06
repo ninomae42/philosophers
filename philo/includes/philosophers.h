@@ -19,6 +19,10 @@
 # define ERR_THREAD_CREATE "[Error] Couldn't create threads"
 # define ERR_THREAD_JOIN "[Error] Couldn't join threads"
 # define ERR_THREAD_DETATCH "[Error] Couldn't detatch threads"
+
+# define STATUS_INIT 0
+# define STATUS_RUNNING 1
+
 typedef pthread_mutex_t	t_fork;
 typedef long long		t_time;
 typedef struct s_info	t_info;
@@ -56,6 +60,7 @@ typedef t_info			t_global_info;
 t_info	*init_global_info(int argc, char **argv);
 int		allocate_philo_and_fork(t_info *info);
 void	free_global_info(t_info *info);
+void	init_philos(t_info *info);
 
 // mutex_init.c
 int		init_all_mutexes(t_info *info);
