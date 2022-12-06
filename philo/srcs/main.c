@@ -39,5 +39,7 @@ int	main(int argc, char **argv)
 	if (init_all_mutexes(info) != 0)
 		return (EXIT_FAILURE);
 	init_philos(info);
+	if (create_philo_threads(info) != 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

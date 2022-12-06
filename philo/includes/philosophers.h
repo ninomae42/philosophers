@@ -70,6 +70,15 @@ int		destroy_all_mutexes(t_info *info);
 int		destroy_fork_mutexes(pthread_mutex_t *mutexes, size_t n);
 int		destroy_philo_mutexes(t_philo *philos, size_t n);
 
+// philo_threads.c
+int		create_philo_threads(t_info *info);
+
+// thread_utils.c
+int		detach_all_threads(t_info *info, size_t n);
+
+// philo_threads_routine.c
+void	*routine_philo(void *arg);
+void	*routine_single_philo(void *arg);
 // cmdline_arguments.c
 int		validate_argument_count(int argc);
 int		set_cmdline_arguments(int argc, char **argv, t_global_info *info);
