@@ -54,6 +54,8 @@ typedef t_info			t_global_info;
 
 // initializer.c
 t_info	*init_global_info(int argc, char **argv);
+int		allocate_philo_and_fork(t_info *info);
+void	free_global_info(t_info *info);
 // cmdline_arguments.c
 int		validate_argument_count(int argc);
 int		set_cmdline_arguments(int argc, char **argv, t_global_info *info);

@@ -27,3 +27,29 @@ t_global_info	*init_global_info(int argc, char **argv)
 	return (info);
 }
 
+int	allocate_philo_and_fork(t_info *info)
+{
+	info->philos = (t_philo *)malloc(sizeof(t_philo) * (info->num_of_philo));
+	if (info->philos == NULL)
+	{
+		ft_puterr(ERR_MEM);
+		return (1);
+	}
+	info->forks = (t_fork *)malloc(sizeof(t_fork) * (info->num_of_philo));
+	if (info->forks == NULL)
+	{
+		ft_puterr(ERR_MEM);
+		free(info->philos);
+		free(info);
+		return (1);
+	}
+	return (0);
+}
+
+void	free_global_info(t_info *info)
+{
+	free(info->philos);
+	free(info->forks);
+	free(info);
+}
+

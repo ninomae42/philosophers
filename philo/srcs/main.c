@@ -29,16 +29,12 @@ t_global_info	*init_global_info(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_global_info	*info;
+	t_info		*info;
 
 	info = init_global_info(argc, argv);
 	if (info == NULL)
 		return (EXIT_FAILURE);
-	printf("num_of_philo: %d\n", info->num_of_philo);
-	printf("time_to_die: %d\n", info->time_to_die);
-	printf("time_to_eat: %d\n", info->time_to_eat);
-	printf("time_to_sleep: %d\n", info->time_to_sleep);
-	printf("number_of_times_each_philosopher_must_eat: %d\n", \
-			info->num_of_times_each_philo_must_eat);
+	if (allocate_philo_and_fork(info) != 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
