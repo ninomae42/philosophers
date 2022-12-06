@@ -72,6 +72,7 @@ int		destroy_philo_mutexes(t_philo *philos, size_t n);
 
 // philo_threads.c
 int		create_philo_threads(t_info *info);
+int		join_philo_threads(t_info *info);
 
 // thread_utils.c
 int		detach_all_threads(t_info *info, size_t n);

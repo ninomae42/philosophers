@@ -41,5 +41,9 @@ int	main(int argc, char **argv)
 	init_philos(info);
 	if (create_philo_threads(info) != 0)
 		return (EXIT_FAILURE);
+	if (join_philo_threads(info) != 0)
+		return (EXIT_FAILURE);
+	destroy_all_mutexes(info);
+	free_global_info(info);
 	return (EXIT_SUCCESS);
 }

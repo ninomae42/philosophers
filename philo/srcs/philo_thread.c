@@ -17,6 +17,29 @@ int	create_philo_threads(t_info *info)
 	return (0);
 }
 
+int	join_philo_threads(t_info *info)
+{
+	size_t	i;
+	bool	is_err;
+
+	i = 0;
+	is_err = false;
+	while (i < (size_t)info->num_of_philo)
+	{
+		if (pthread_join(info->philos[i].thread, NULL) != 0)
+			is_err = true;
+		i++;
+	}
+	if (is_err)
+	{
+		ft_puterr(ERR_THREAD_JOIN);
+		destroy_all_mutexes(info);
+		free_global_info(info);
+		return (1);
+	}
+	return (0);
+}
+
 static int	create_thread_inner(t_info *info, size_t *index)
 {
 	size_t	i;
