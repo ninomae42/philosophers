@@ -12,6 +12,8 @@
 # include <unistd.h>
 
 typedef pthread_mutex_t	t_fork;
+typedef long long		t_time;
+typedef struct s_info	t_info;
 
 typedef struct s_philo
 {
@@ -23,19 +25,22 @@ typedef struct s_philo
 	t_fork			*left_fork;
 	long long		last_eat_time_in_usec;
 	size_t			eat_cnt;
+	t_info			*info;
+	int				status;
 }	t_philo;
 
-typedef struct s_global_info
+typedef struct s_info
 {
-	int		num_of_philo;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		num_of_times_each_philo_must_eat;
-	t_philo	*philos;
-	t_fork	*forks;
+	int				num_of_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_of_times_each_philo_must_eat;
+	t_philo			*philos;
+	t_fork			*forks;
 	pthread_mutex_t	syslog_mutex;
-}	t_global_info;
+	bool			is_simulation_stop;
+}	t_info;
 
 // cmdline_arguments.c
 int		validate_argument_count(int argc);
