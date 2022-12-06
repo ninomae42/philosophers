@@ -56,6 +56,15 @@ typedef t_info			t_global_info;
 t_info	*init_global_info(int argc, char **argv);
 int		allocate_philo_and_fork(t_info *info);
 void	free_global_info(t_info *info);
+
+// mutex_init.c
+int		init_all_mutexes(t_info *info);
+
+// mutex_destroy.c
+int		destroy_all_mutexes(t_info *info);
+int		destroy_fork_mutexes(pthread_mutex_t *mutexes, size_t n);
+int		destroy_philo_mutexes(t_philo *philos, size_t n);
+
 // cmdline_arguments.c
 int		validate_argument_count(int argc);
 int		set_cmdline_arguments(int argc, char **argv, t_global_info *info);

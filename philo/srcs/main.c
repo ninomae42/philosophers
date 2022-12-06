@@ -36,5 +36,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (allocate_philo_and_fork(info) != 0)
 		return (EXIT_FAILURE);
+	if (init_all_mutexes(info) != 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
