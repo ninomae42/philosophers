@@ -59,8 +59,6 @@ void	set_fork_mutex(t_info *info, size_t i)
 	{
 		info->philos[i].left_fork = &(info->forks[i]);
 		info->philos[i].right_fork = &(info->forks[0]);
-		// info->philos[i].left_fork = &(info->forks[0]);
-		// info->philos[i].right_fork = &(info->forks[i]);
 	}
 	else
 	{
