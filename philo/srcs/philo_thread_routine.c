@@ -2,14 +2,14 @@
 
 static int	set_initial_state(t_philo *philo);
 static int	check_death_release_fork(t_philo *philo);
+static void	create_interval(t_philo *philo);
 
 void	*routine_philo(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->id % 2 == 0)
-		ft_usleep(300);
+	create_interval(philo);
 	if (set_initial_state(philo) != 0)
 		return (arg);
 	while (1)
@@ -44,6 +44,22 @@ void	*routine_single_philo(void *arg)
 			return (arg);
 	}
 	return (arg);
+}
+
+static void	create_interval(t_philo *philo)
+{
+	unsigned int	fork_cnt;
+
+	if (philo->info->num_of_philo % 2 != 0)
+	{
+		fork_cnt = philo->info->num_of_philo / 2;
+		if (philo->id % 2 != 0)
+			ft_msleep(philo->info->time_to_eat);
+		ft_msleep((philo->info->time_to_eat / fork_cnt) * (philo->id / 2));
+	}
+	else
+		if (philo->id % 2 == 0)
+			ft_usleep(300);
 }
 
 static int	set_initial_state(t_philo *philo)

@@ -53,6 +53,22 @@ void	free_global_info(t_info *info)
 	free(info);
 }
 
+void	set_fork_mutex(t_info *info, size_t i)
+{
+	if (i == (size_t)(info->num_of_philo - 1))
+	{
+		info->philos[i].left_fork = &(info->forks[i]);
+		info->philos[i].right_fork = &(info->forks[0]);
+		// info->philos[i].left_fork = &(info->forks[0]);
+		// info->philos[i].right_fork = &(info->forks[i]);
+	}
+	else
+	{
+		info->philos[i].left_fork = &(info->forks[i]);
+		info->philos[i].right_fork = &(info->forks[i + 1]);
+	}
+}
+
 void	init_philos(t_info *info)
 {
 	size_t	i;
@@ -66,11 +82,7 @@ void	init_philos(t_info *info)
 		info->philos[i].syslog_mutex = &(info->syslog_mutex);
 		info->philos[i].info = info;
 		info->philos[i].status = STATUS_INIT;
-		info->philos[i].right_fork = &(info->forks[i]);
-		if (i == 0)
-			info->philos[i].left_fork = &(info->forks[info->num_of_philo - 1]);
-		else
-			info->philos[i].left_fork = &(info->forks[i - 1]);
+		set_fork_mutex(info, i);
 		i++;
 	}
 }
