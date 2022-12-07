@@ -50,7 +50,7 @@ int	join_philo_threads(t_info *info)
 	return (0);
 }
 
-static int create_half_thread(t_info *info, size_t start, size_t *index)
+static int	create_half_thread(t_info *info, size_t start, size_t *index)
 {
 	while (start < (size_t)info->num_of_philo)
 	{
