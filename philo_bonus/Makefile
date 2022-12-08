@@ -7,6 +7,7 @@ SRCS := main.c \
 		cmdline_arguments.c \
 		ft_atoi.c \
 		utils.c \
+		time.c \
 
 OBJS := $(SRCS:.c=.o)
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
