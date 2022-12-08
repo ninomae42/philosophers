@@ -1,0 +1,16 @@
+# executable files
+*/*a.out
+philo_bonus
+
+# object files
+*/*.o
+objs/
+
+# editor config files
+.vscode
+compile_commands.json
+.cache
+
+# My local playground directory
+lab/
+test/
