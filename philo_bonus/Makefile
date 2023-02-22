@@ -16,7 +16,7 @@ OBJS := $(addprefix $(OBJS_DIR)/, $(OBJS))
 INC_DIR := ./includes
 INCLUDES := $(addprefix -I, $(INC_DIR))
 
-CC := gcc
+CC := cc
 # CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 # CFLAGS := -Wall -Wextra -Werror -g -fsanitize=thread
 CFLAGS := -Wall -Wextra -Werror
