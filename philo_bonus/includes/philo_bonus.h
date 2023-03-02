@@ -13,4 +13,9 @@
 # include <sys/stat.h>
 # include <unistd.h>
 
+// ft_put_some.c
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_puterr(char *err_msg);
+
 #endif
