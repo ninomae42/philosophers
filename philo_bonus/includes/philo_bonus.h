@@ -30,7 +30,7 @@ typedef struct s_args
 }	t_args;
 
 // ft_atoi.c
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 
 // ft_put_some.c
 void	ft_putstr_fd(char *s, int fd);
