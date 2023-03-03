@@ -37,3 +37,9 @@ void	ft_puterr(char *err_msg)
 {
 	ft_putendl_fd(err_msg, STDERR_FILENO);
 }
+
+void	ft_puterr_exit(char *err_msg)
+{
+	ft_puterr(err_msg);
+	exit(EXIT_FAILURE);
+}
