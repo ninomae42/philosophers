@@ -4,7 +4,9 @@ SRCS_DIR := ./srcs
 OBJS_DIR := ./objs
 
 SRCS := main.c \
+		ft_atoi.c \
 		ft_put_some.c \
+		validate_args.c \
 
 OBJS := $(SRCS:.c=.o)
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
