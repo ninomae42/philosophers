@@ -7,7 +7,7 @@ SRCS := main.c \
 		cmdline_args.c \
 		ft_atoi.c \
 		ft_put_some.c \
-		ft_syscalls.c \
+		time.c \
 		validate_args.c \
 
 OBJS := $(SRCS:.c=.o)

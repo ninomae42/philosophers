@@ -58,11 +58,6 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_puterr(char *err_msg);
 void	ft_puterr_exit(char *err_msg);
 
-// ft_syscalls.c
-pid_t	ft_fork(void);
-void	ft_kill(pid_t pid, int sig);
-void	*ft_malloc(size_t size);
-
 // cmdline_args.c
 void	parse_cmdline_arguments(int argc, char **argv, t_args *args);
 
