@@ -47,7 +47,7 @@ typedef struct s_args
 }	t_args;
 
 // Time
-typedef unsigned long long	t_time;
+typedef long long	t_time;
 
 // ft_atoi.c
 int		ft_atoi(const char *str);
