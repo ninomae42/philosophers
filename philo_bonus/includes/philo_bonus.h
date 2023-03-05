@@ -68,6 +68,7 @@ void	validate_arguments(int argc);
 // time.c
 t_time	get_current_time_in_usec(void);
 t_time	get_current_time_in_msec(void);
+t_time	get_time_diff(t_philo *philo);
 void	ft_usleep(unsigned int usec);
 void	ft_msleep(unsigned int msec);
 

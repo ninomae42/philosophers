@@ -53,3 +53,11 @@ void	ft_msleep(unsigned int msec)
 		usleep(left_time_to_sleep / 2);
 	}
 }
+
+t_time	get_time_diff(t_philo *philo)
+{
+	t_time	diff;
+
+	diff = get_current_time_in_msec() - philo->time_last_eat;
+	return (diff);
+}
