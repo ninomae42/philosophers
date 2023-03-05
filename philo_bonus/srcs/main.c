@@ -1,96 +1,111 @@
 #include "philo_bonus.h"
 
-void	terminate_procs(pid_t *pid, size_t proc_num)
-{
-	size_t	i;
+# define FT_SEM_OFLAG (O_CREAT | O_EXCL)
+# define FT_SEM_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
+# define MAX_RES 2000000
+# define FT_SEM_NAME "/semtest"
 
-	i = 0;
-	while (i < proc_num)
+int		result = 0;
+sem_t	*global_sem;
+
+void	*thread_routine(void *args)
+{
+	int	tmp;
+
+	printf("Thread craeted\n");
+	while (1)
 	{
-		kill(pid[i], SIGTERM);
-		i++;
+		if (sem_wait(global_sem) < 0)
+			perror("sem_wait");
+		if (MAX_RES <= result)
+		{
+			if (sem_post(global_sem) < 0)
+				perror("sem_post1");
+			break ;
+		}
+		tmp = result;
+		tmp++;
+		result = tmp;
+		if (sem_post(global_sem) < 0)
+			perror("sem_post2");
 	}
+	return (args);
 }
 
-pid_t	*make_procs(size_t proc_num)
+sem_t	*ft_sem_open(char *name, unsigned int value)
 {
-	size_t	i;
-	pid_t	*pid;
+	sem_t	*sem;
 
-	i = 0;
-	pid = (pid_t *)malloc(sizeof(pid_t) * proc_num);
-	if (pid == NULL)
-		return (NULL);
-	while (i < proc_num)
+	sem = sem_open(name, FT_SEM_OFLAG, FT_SEM_MODE, value);
+	if (sem == SEM_FAILED)
 	{
-		pid[i] = fork();
-		if (pid[i] < 0)
+		if (errno == EEXIST)
 		{
-			ft_puterr("[Error]: Unable to fork process");
-			terminate_procs(pid, i);
-			return (NULL);
+			printf("Create semaphore %s failed due to EEXIST\n", name);
+			sem = sem_open(name, O_RDWR);
+			if (sem == SEM_FAILED)
+			{
+				perror("sem_open");
+				return (SEM_FAILED);
+			}
+			if (sem_close(sem) < 0)
+				perror("sem_close");
+			if (sem_unlink(name) < 0)
+			{
+				perror("sem_unlink");
+				return (SEM_FAILED);
+			}
+			sem = sem_open(name, FT_SEM_OFLAG, FT_SEM_MODE, value);
 		}
-		else if (pid[i] == 0)
-		{
-			// TODO: do child process
-			exit(EXIT_SUCCESS);
-		}
-		i++;
 	}
-	return (pid);
+	return (sem);
 }
 
-int	wait_procs(pid_t *pid, size_t proc_num)
+void	sem_playground(char *name)
 {
-	size_t	i;
-	int		status;
+	pthread_t	thread_main;
+	pthread_t	thread_monitor;
 
-	i = 0;
-	while (i < proc_num)
+	global_sem = ft_sem_open(name, 1);
+	if (global_sem == SEM_FAILED)
 	{
-		if (waitpid(pid[i], &status, 0) == -1)
-		{
-			ft_puterr("[Error] waitpid. Unable to wait procs");
-			terminate_procs(pid, proc_num);
-			return (1);
-		}
-		else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		{
-			printf("Child process %d exited with status %d\n", pid[i], WEXITSTATUS(status));
-			terminate_procs(pid, proc_num);
-			printf("All child process have terminated\n");
-			return (1);
-		}
-		else
-			printf("Child process %d exited with status %d\n", pid[i], WEXITSTATUS(status));
-		i++;
+		perror("sem_open");
+		return ;
 	}
-	printf("All child process have exited successfully\n");
-	return (0);
-}
+	printf("semaphore %s created\n", name);
 
-int	make_wait_procs(size_t proc_num)
-{
-	int		res;
-	pid_t	*pid;
+	if (pthread_create(&thread_main, NULL, thread_routine, NULL) != 0)
+		perror("pthread_create");
+	if (pthread_create(&thread_monitor, NULL, thread_routine, NULL) != 0)
+		perror("pthread_create");
+	if (pthread_join(thread_main, NULL) != 0)
+		perror("pthread_join");
+	if (pthread_join(thread_monitor, NULL) != 0)
+		perror("pthread_join");
+	printf("[LOG]result %d\n", result);
 
-	pid = make_procs(proc_num);
-	if (pid == NULL)
-		return (1);
-	res = wait_procs(pid, proc_num);
-	free(pid);
-	if (res != 0)
-		return (1);
-	return (0);
+	if (sem_close(global_sem) < 0)
+		perror("sem_close");
+	printf("semaphore %s closed\n", name);
+	if (sem_unlink(name) < 0)
+		perror("sem_unlink");
+	printf("semaphore %s unlinked\n", name);
 }
 
 int	main(int argc, char **argv)
 {
-	t_args	args;
+	(void)argc;
+	(void)argv;
+	
+	sem_playground(FT_SEM_NAME);
 
-	validate_arguments(argc);
-	parse_cmdline_arguments(argc, argv, &args);
-	if (make_wait_procs(args.num_of_philo) != 0)
-		exit(EXIT_FAILURE);
-	exit(EXIT_SUCCESS);
 }
+
+//int	main(int argc, char **argv)
+//{
+//	t_args	args;
+//
+//	validate_arguments(argc);
+//	parse_cmdline_arguments(argc, argv, &args);
+//	exit(EXIT_SUCCESS);
+//}

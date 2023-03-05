@@ -1,6 +1,7 @@
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 # include <errno.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <pthread.h>
 # include <semaphore.h>

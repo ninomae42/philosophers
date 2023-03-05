@@ -22,9 +22,10 @@ LFLAGS := $(addprefix -l, $(LIBS))
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-# CFLAGS += -g -fsanitize=undefined
+CFLAGS += -g
+# CFLAGS += -fsanitize=undefined
 # CFLAGS += -fsanitize=address
-# CFLAGS += -fsanitize=thread
+CFLAGS += -fsanitize=thread
 RM := rm -rf
 
 .PHONY: all
