@@ -3,9 +3,10 @@
 # define FT_SEM_OFLAG (O_CREAT | O_EXCL)
 # define FT_SEM_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
 # define MAX_RES 2000000
-# define FT_SEM_NAME "/semtest"
 # define FT_SEM_LOG "/semtest_log"
-# define FT_SEM_FORK "/semtest_fork"
+# define FT_SEM_FORK_LEFT "/semtest_fork_left"
+# define FT_SEM_FORK_RIGHT "/semtest_fork_right"
+# define FT_SEM_ACCESS "/semtest_access_1"
 
 int	print_log(t_philo *philo, t_log_type log_type, t_time log_time)
 {
@@ -22,17 +23,17 @@ int	print_log(t_philo *philo, t_log_type log_type, t_time log_time)
 	if (sem_wait(philo->log_sem) < 0)
 		perror("sem_wait");
 	if (log_type == LOG_FORK)
-		printf("%lld philo has taken a fork\n",
-				log_time);
+		printf("%lld %zu has taken a fork\n",
+				log_time, philo->philo_index);
 	else if (log_type == LOG_EAT)
-		printf("%lld philo is eating\n",
-				log_time);
+		printf("%lld %zu is eating\n",
+				log_time, philo->philo_index);
 	else if (log_type == LOG_SLEEP)
-		printf("%lld philo is sleeping\n",
-				log_time);
+		printf("%lld %zu is sleeping\n",
+				log_time, philo->philo_index);
 	else if (log_type == LOG_THINK)
-		printf("%lld philo is thinking\n",
-				log_time);
+		printf("%lld %zu is thinking\n",
+				log_time, philo->philo_index);
 	if (sem_post(philo->log_sem) < 0)
 		perror("sem_post");
 	return (0);
@@ -129,7 +130,7 @@ void	*monitor_routine(void *args)
 				perror("sem_wait");
 			philo->is_simulation_stop = true;
 			philo->is_philo_success = false;
-			printf("%lld philo died\n", get_current_time_in_msec());
+			printf("%lld %zu died\n", get_current_time_in_msec(), philo->philo_index);
 			if (sem_post(philo->log_sem) < 0)
 				perror("sem_post");
 			if (sem_post(philo->access_sem) < 0)
@@ -172,19 +173,19 @@ sem_t	*ft_sem_open(char *name, unsigned int value)
 	return (sem);
 }
 
-int	create_philo_proc(int time_to_die, int time_to_eat, int time_to_sleep, int num_of_must_eat)
+int	create_philo_proc(size_t index, t_args *args)
 {
 	pthread_t	thread_philo;
 	pthread_t	thread_monitor;
 	t_philo		philo;
 
-	philo.fork_left_sem = ft_sem_open(FT_SEM_FORK, 1);
+	philo.fork_left_sem = ft_sem_open(FT_SEM_FORK_LEFT, 1);
 	if (philo.access_sem == SEM_FAILED)
 	{
 		perror("sem_open");
 		return (EXIT_FAILURE);
 	}
-	philo.fork_right_sem = ft_sem_open(FT_SEM_FORK, 1);
+	philo.fork_right_sem = ft_sem_open(FT_SEM_FORK_RIGHT, 1);
 	if (philo.access_sem == SEM_FAILED)
 	{
 		perror("sem_open");
@@ -196,16 +197,17 @@ int	create_philo_proc(int time_to_die, int time_to_eat, int time_to_sleep, int n
 		perror("sem_open");
 		return (EXIT_FAILURE);
 	}
-	philo.access_sem = ft_sem_open(FT_SEM_NAME, 1);
+	philo.access_sem = ft_sem_open(FT_SEM_ACCESS, 1);
 	if (philo.access_sem == SEM_FAILED)
 	{
 		perror("sem_open");
 		return (EXIT_FAILURE);
 	}
-	philo.time_to_die = time_to_die;
-	philo.time_to_eat = time_to_eat;
-	philo.time_to_sleep = time_to_sleep;
-	philo.num_of_must_eat = num_of_must_eat;
+	philo.time_to_die = args->time_to_die;
+	philo.time_to_eat = args->time_to_eat;
+	philo.time_to_sleep = args->time_to_sleep;
+	philo.num_of_must_eat = args->num_of_must_eat;
+	philo.philo_index = index;
 	philo.num_of_current_eat = 0;
 	philo.time_last_eat = 0;
 	philo.is_simulation_stop = false;
@@ -224,10 +226,36 @@ int	create_philo_proc(int time_to_die, int time_to_eat, int time_to_sleep, int n
 
 	if (sem_close(philo.access_sem) < 0)
 		perror("sem_close");
-	printf("semaphore %s closed\n", FT_SEM_NAME);
-	if (sem_unlink(FT_SEM_NAME) < 0)
+	printf("semaphore %s closed\n", FT_SEM_ACCESS);
+
+	if (sem_close(philo.log_sem) < 0)
+		perror("sem_close");
+	printf("semaphore %s closed\n", FT_SEM_LOG);
+
+	if (sem_close(philo.fork_right_sem) < 0)
+		perror("sem_close");
+	printf("semaphore %s closed\n", FT_SEM_FORK_RIGHT);
+
+	if (sem_close(philo.fork_left_sem) < 0)
+		perror("sem_close");
+	printf("semaphore %s closed\n", FT_SEM_FORK_LEFT);
+
+	if (sem_unlink(FT_SEM_ACCESS) < 0)
 		perror("sem_unlink");
-	printf("semaphore %s unlinked\n", FT_SEM_NAME);
+	printf("semaphore %s unlinked\n", FT_SEM_ACCESS);
+
+	if (sem_unlink(FT_SEM_LOG) < 0)
+		perror("sem_unlink");
+	printf("semaphore %s unlinked\n", FT_SEM_LOG);
+
+	if (sem_unlink(FT_SEM_FORK_LEFT) < 0)
+		perror("sem_unlink");
+	printf("semaphore %s unlinked\n", FT_SEM_FORK_LEFT);
+
+	if (sem_unlink(FT_SEM_FORK_RIGHT) < 0)
+		perror("sem_unlink");
+	printf("semaphore %s unlinked\n", FT_SEM_FORK_RIGHT);
+
 	if (philo.is_philo_success)
 		return (EXIT_SUCCESS);
 	else
@@ -236,19 +264,11 @@ int	create_philo_proc(int time_to_die, int time_to_eat, int time_to_sleep, int n
 
 int	main(int argc, char **argv)
 {
-	if (argc == 6)
-		create_philo_proc(atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]));
-	else if (argc == 5)
-		create_philo_proc(atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), 0);
-	else
-		printf("check args\n");
-}
+	t_args	args;
 
-//int	main(int argc, char **argv)
-//{
-//	t_args	args;
-//
-//	validate_arguments(argc);
-//	parse_cmdline_arguments(argc, argv, &args);
-//	exit(EXIT_SUCCESS);
-//}
+	validate_arguments(argc);
+	parse_cmdline_arguments(argc, argv, &args);
+	if (create_philo_proc(1, &args) != EXIT_SUCCESS)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
+}

@@ -64,9 +64,11 @@ typedef struct s_philo
 	sem_t	*log_sem;
 	sem_t	*fork_left_sem;
 	sem_t	*fork_right_sem;
+
 	sem_t	*access_sem;
-	int		num_of_current_eat;
+	size_t	philo_index;
 	t_time	time_last_eat;
+	int		num_of_current_eat;
 	bool	is_simulation_stop;
 	bool	is_philo_success;
 }	t_philo;
