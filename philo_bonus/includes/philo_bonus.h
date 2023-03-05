@@ -36,6 +36,9 @@
 // Program constraints
 # define MAX_PHILO_NUM 200
 
+// Monitoring interval
+# define MONITOR_INTERVAL 500
+
 // --- Types ---
 // Command line arguments
 typedef struct s_args
@@ -49,6 +52,33 @@ typedef struct s_args
 
 // Time
 typedef long long	t_time;
+
+// philo thread information
+typedef struct s_philo
+{
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		num_of_must_eat;
+
+	sem_t	*log_sem;
+	sem_t	*fork_left_sem;
+	sem_t	*fork_right_sem;
+	sem_t	*access_sem;
+	int		num_of_current_eat;
+	t_time	time_last_eat;
+	bool	is_simulation_stop;
+	bool	is_philo_success;
+}	t_philo;
+
+typedef enum e_log_type
+{
+	LOG_FORK = 0,
+	LOG_EAT = 1,
+	LOG_SLEEP = 2,
+	LOG_THINK = 3,
+}	t_log_type;
+
 
 // ft_atoi.c
 int		ft_atoi(const char *str);
