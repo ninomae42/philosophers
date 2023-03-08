@@ -25,6 +25,8 @@
 # define ERR_MEM "[Error] Unable to allocate memory"
 # define ERR_GET_TIME "[Error] gettimeofday."
 # define ERR_SEM_OPEN "[Error] Unable to create semaphore"
+# define ERR_SEM_POST "[Error] Unable to post semaphore"
+# define ERR_SEM_WAIT "[Error] Unable to wait semaphore"
 
 // 1 milliseconds is equal to 1000 microseconds
 # define USEC_TO_MSEC 1000
@@ -113,6 +115,10 @@ sem_t	*sem_create_access(size_t index);
 // sem_allocate.c
 void	sem_allocate_all_sems(t_sems *sems, int num_of_philo);
 void	sem_deallocate_all_sems(t_sems *sems, size_t num_of_philo);
+
+// sem_wrap.c
+void	ft_sem_post(sem_t *sem);
+void	ft_sem_wait(sem_t *sem);
 
 // time.c
 t_time	get_current_time_in_usec(void);
