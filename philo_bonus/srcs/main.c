@@ -48,7 +48,7 @@ int	wait_procs(pid_t *pid, size_t proc_num)
 	i = 0;
 	while (i < proc_num)
 	{
-		if (waitpid(pid[i], &status, 0) == -1)
+		if (waitpid(0, &status, 0) == -1)
 		{
 			ft_puterr(ERR_WAIT);
 			terminate_procs(pid, proc_num);
