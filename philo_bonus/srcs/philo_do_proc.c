@@ -75,7 +75,9 @@ static void	set_interval(t_philo *philo)
 	}
 	num_of_fork_sets = philo->num_of_philo / 2;
 	eat_interval = philo->time_to_eat / num_of_fork_sets;
-	total_interval = eat_interval * (philo->philo_index / 2);
+	total_interval = 0;
+	if (2 < philo->philo_index)
+		total_interval = eat_interval * (philo->philo_index / 2);
 	if (philo->philo_index % 2 == 0)
 		total_interval += philo->time_to_eat;
 	philo->start_interval = total_interval;
