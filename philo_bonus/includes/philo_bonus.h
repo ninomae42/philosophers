@@ -23,6 +23,7 @@
 # define ERR_FORK "[Error] Unable to fork process"
 # define ERR_KILL "[Error] Unable to kill signal"
 # define ERR_MEM "[Error] Unable to allocate memory"
+# define ERR_WAIT "[Error] Unable to wait procs"
 # define ERR_GET_TIME "[Error] gettimeofday."
 # define ERR_SEM_OPEN "[Error] Unable to create semaphore"
 # define ERR_SEM_POST "[Error] Unable to post semaphore"
