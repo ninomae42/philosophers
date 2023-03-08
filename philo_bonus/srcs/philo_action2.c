@@ -17,7 +17,7 @@ void	print_log(t_philo *philo, t_log_type log_type, t_time log_time)
 				log_time, philo->philo_index);
 	else if (log_type == LOG_DIE)
 	{
-		printf("%lld %zu is died\n",
+		printf("%lld %zu died\n",
 				log_time, philo->philo_index);
 		return ;
 	}

@@ -1,6 +1,25 @@
 #include "philo_bonus.h"
 
-void	terminate_procs(pid_t *pid, size_t proc_num)
+static void		terminate_procs(pid_t *pid, size_t proc_num);
+static pid_t	*make_procs(size_t proc_num, t_args *arg, t_sems *sem);
+static int		wait_procs(pid_t *pid, size_t proc_num);
+
+int	make_wait_procs(t_args *arg, t_sems *sem)
+{
+	int		res;
+	pid_t	*pids;
+
+	pids = make_procs(arg->num_of_philo, arg, sem);
+	if (pids == NULL)
+		return (1);
+	res = wait_procs(pids, arg->num_of_philo);
+	free(pids);
+	if (res != 0)
+		return (1);
+	return (0);
+}
+
+static void	terminate_procs(pid_t *pid, size_t proc_num)
 {
 	size_t	i;
 
@@ -12,7 +31,7 @@ void	terminate_procs(pid_t *pid, size_t proc_num)
 	}
 }
 
-pid_t	*make_procs(size_t proc_num)
+static pid_t	*make_procs(size_t proc_num, t_args *arg, t_sems *sem)
 {
 	size_t	i;
 	pid_t	*pid;
@@ -20,27 +39,27 @@ pid_t	*make_procs(size_t proc_num)
 	i = 0;
 	pid = (pid_t *)malloc(sizeof(pid_t) * proc_num);
 	if (pid == NULL)
+	{
+		ft_puterr(ERR_MEM);
 		return (NULL);
+	}
 	while (i < proc_num)
 	{
 		pid[i] = fork();
 		if (pid[i] < 0)
 		{
-			ft_puterr("[Error]: Unable to fork process");
+			ft_puterr(ERR_FORK);
 			terminate_procs(pid, i);
 			return (NULL);
 		}
 		else if (pid[i] == 0)
-		{
-			// TODO: do child process
-			exit(EXIT_SUCCESS);
-		}
+			do_philo_proc(i + 1, arg, sem);
 		i++;
 	}
 	return (pid);
 }
 
-int	wait_procs(pid_t *pid, size_t proc_num)
+static int	wait_procs(pid_t *pid, size_t proc_num)
 {
 	size_t	i;
 	int		status;
@@ -48,38 +67,18 @@ int	wait_procs(pid_t *pid, size_t proc_num)
 	i = 0;
 	while (i < proc_num)
 	{
-		if (waitpid(pid[i], &status, 0) == -1)
+		if (waitpid(0, &status, 0) == -1)
 		{
-			ft_puterr("[Error] waitpid. Unable to wait procs");
+			ft_puterr(ERR_WAIT);
 			terminate_procs(pid, proc_num);
-			return (1);
+			return (-1);
 		}
 		else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		{
-			printf("Child process %d exited with status %d\n", pid[i], WEXITSTATUS(status));
 			terminate_procs(pid, proc_num);
-			printf("All child process have terminated\n");
-			return (1);
+			return (-1);
 		}
-		else
-			printf("Child process %d exited with status %d\n", pid[i], WEXITSTATUS(status));
 		i++;
 	}
-	printf("All child process have exited successfully\n");
-	return (0);
-}
-
-int	make_wait_procs(size_t proc_num)
-{
-	int		res;
-	pid_t	*pid;
-
-	pid = make_procs(proc_num);
-	if (pid == NULL)
-		return (1);
-	res = wait_procs(pid, proc_num);
-	free(pid);
-	if (res != 0)
-		return (1);
 	return (0);
 }

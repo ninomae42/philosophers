@@ -72,6 +72,7 @@ typedef long long	t_time;
 // philo thread information
 typedef struct s_philo
 {
+	int		num_of_philo;
 	int		time_to_die;
 	int		time_to_eat;
 	int		time_to_sleep;
@@ -85,6 +86,8 @@ typedef struct s_philo
 	size_t	philo_index;
 	t_time	time_last_eat;
 	int		num_of_current_eat;
+
+	time_t	start_interval;
 }	t_philo;
 
 // semaphore management
@@ -135,6 +138,9 @@ void	print_log(t_philo *philo, t_log_type log_type, t_time log_time);
 
 // philo_do_proc.c
 void	do_philo_proc(size_t index, t_args *arg, t_sems *sem);
+
+// procs.c
+int		make_wait_procs(t_args *arg, t_sems *sem);
 
 // time.c
 t_time	get_current_time_in_usec(void);

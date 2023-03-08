@@ -12,6 +12,7 @@ SRCS := main.c \
 		philo_action.c \
 		philo_action2.c \
 		philo_do_proc.c \
+		proc.c \
 		time.c \
 		ft_atoi.c \
 		ft_itoa.c \
@@ -31,8 +32,8 @@ LFLAGS := $(addprefix -l, $(LIBS))
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-CFLAGS += -g
-CFLAGS += -fsanitize=undefined
+# CFLAGS += -g
+# CFLAGS += -fsanitize=undefined
 # CFLAGS += -fsanitize=address
 # CFLAGS += -fsanitize=thread
 RM := rm -rf
