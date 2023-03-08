@@ -84,6 +84,14 @@ typedef struct s_philo
 	bool	is_philo_success;
 }	t_philo;
 
+typedef struct s_sems
+{
+	sem_t	*log_sem;
+	sem_t	*fork_left_sem;
+	sem_t	*fork_right_sem;
+	sem_t	**philo_access_sems;
+}	t_sems;
+
 typedef enum e_log_type
 {
 	LOG_FORK = 0,
@@ -101,6 +109,10 @@ void	validate_arguments(int argc);
 // sem_craete.c
 sem_t	*sem_create(char *sem_name, unsigned int value);
 sem_t	*sem_create_access(size_t index);
+
+// sem_allocate.c
+void	sem_allocate_all_sems(t_sems *sems, int num_of_philo);
+void	sem_deallocate_all_sems(t_sems *sems, size_t num_of_philo);
 
 // time.c
 t_time	get_current_time_in_usec(void);
