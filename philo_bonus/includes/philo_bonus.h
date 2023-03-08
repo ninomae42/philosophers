@@ -24,6 +24,7 @@
 # define ERR_KILL "[Error] Unable to kill signal"
 # define ERR_MEM "[Error] Unable to allocate memory"
 # define ERR_GET_TIME "[Error] gettimeofday."
+# define ERR_SEM_OPEN "[Error] Unable to create semaphore"
 
 // 1 milliseconds is equal to 1000 microseconds
 # define USEC_TO_MSEC 1000
@@ -33,11 +34,21 @@
 # define MSEC_TO_SEC 1000
 # define SEC_TO_MSEC 1000
 
+// Options for sem_open
+# define PHILO_SEM_OFLAG (O_CREAT | O_EXCL)
+# define PHILO_SEM_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
+
 // Program constraints
 # define MAX_PHILO_NUM 200
 
 // Monitoring interval
 # define MONITOR_INTERVAL 500
+
+// Semaphore Names
+# define PHILO_LOG "/sem_syslog"
+# define PHILO_RIGHT_FORK "/sem_right_fork"
+# define PHILO_LEFT_FORK "/sem_left_fork"
+# define PHILO_ACCESS_SEM_PREFIX "/sem_sync"
 
 // --- Types ---
 // Command line arguments
@@ -87,6 +98,9 @@ void	parse_cmdline_arguments(int argc, char **argv, t_args *args);
 // validate_args.c
 void	validate_arguments(int argc);
 
+// sem_craete.c
+sem_t	*sem_create(char *sem_name, unsigned int value);
+sem_t	*sem_create_access(size_t index);
 
 // time.c
 t_time	get_current_time_in_usec(void);
