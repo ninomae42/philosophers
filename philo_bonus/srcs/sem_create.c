@@ -2,9 +2,12 @@
 
 static sem_t	*ft_sem_open(char *name, unsigned int value)
 {
-	sem_t	*sem;
+	sem_t		*sem;
+	const int	sem_oflag = O_CREAT | O_EXCL;
+	const int	sem_mode = S_IRUSR | S_IWUSR
+		| S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
 
-	sem = sem_open(name, PHILO_SEM_OFLAG, PHILO_SEM_MODE, value);
+	sem = sem_open(name, sem_oflag, sem_mode, value);
 	if (sem == SEM_FAILED)
 	{
 		if (errno == EEXIST)
@@ -14,7 +17,7 @@ static sem_t	*ft_sem_open(char *name, unsigned int value)
 				return (SEM_FAILED);
 			sem_close(sem);
 			sem_unlink(name);
-			sem = sem_open(name, PHILO_SEM_OFLAG, PHILO_SEM_MODE, value);
+			sem = sem_open(name, sem_oflag, sem_mode, value);
 		}
 	}
 	return (sem);

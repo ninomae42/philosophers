@@ -2,7 +2,8 @@
 
 void	philo_wait_forks(t_philo *philo)
 {
-	if (philo->num_of_must_eat != 0 && philo->num_of_must_eat <= philo->num_of_current_eat)
+	if (philo->num_of_must_eat != 0
+		&& philo->num_of_must_eat <= philo->num_of_current_eat)
 		exit(EXIT_SUCCESS);
 	ft_sem_wait(philo->fork_left_sem);
 	print_log(philo, LOG_FORK, get_current_time_in_msec());

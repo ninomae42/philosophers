@@ -20,7 +20,7 @@
 // --- Constants ---
 // Error Messages
 # define ERR_ARG_FORMAT "[Error] Unable to convert some arguments to integer"
-# define ERR_ARG_NEGATIVE "[Error] Each arguments must be positive integer value"
+# define ERR_ARG_NEGATIVE "[Error] Each arguments must be positive integer"
 # define ERR_ARG_PHILO_NUM "[Error] Num of philos must be less than equal 200"
 # define ERR_FORK "[Error] Unable to fork process"
 # define ERR_KILL "[Error] Unable to kill signal"
@@ -40,10 +40,6 @@
 // 1 seconds is equal to 1000 milliseconds
 # define MSEC_TO_SEC 1000
 # define SEC_TO_MSEC 1000
-
-// Options for sem_open
-# define PHILO_SEM_OFLAG (O_CREAT | O_EXCL)
-# define PHILO_SEM_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
 
 // Program constraints
 # define MAX_PHILO_NUM 200

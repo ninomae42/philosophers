@@ -1,6 +1,7 @@
 #include "philo_bonus.h"
 
-static void	philo_set_infos(t_philo *philo, size_t index, t_args *arg, t_sems *sem);
+static void	philo_set_infos(t_philo *philo,
+				size_t index, t_args *arg, t_sems *sem);
 static void	*routine_philo(void *args);
 static void	*routine_monitor(void *args);
 
@@ -50,7 +51,8 @@ static void	*routine_monitor(void *args)
 	while (1)
 	{
 		ft_sem_wait(philo->access_sem);
-		if (philo->time_last_eat != 0 && philo->time_to_die < get_time_diff(philo))
+		if (philo->time_last_eat != 0
+			&& philo->time_to_die < get_time_diff(philo))
 		{
 			print_log(philo, LOG_DIE, get_current_time_in_msec());
 			ft_sem_post(philo->access_sem);
@@ -83,7 +85,8 @@ static void	set_interval(t_philo *philo)
 	philo->start_interval = total_interval;
 }
 
-static void	philo_set_infos(t_philo *philo, size_t index, t_args *arg, t_sems *sem)
+static void	philo_set_infos(
+			t_philo *philo, size_t index, t_args *arg, t_sems *sem)
 {
 	philo->num_of_philo = arg->num_of_philo;
 	philo->time_to_die = arg->time_to_die;

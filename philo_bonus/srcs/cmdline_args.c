@@ -61,10 +61,9 @@ static int	set_cmdline_arguments(int argc, char **argv, t_args *args)
 	if (argc == 6)
 	{
 		if (do_atoi_set_safely(argv[5], &args->num_of_must_eat) != 0)
-		return (1);
+			return (1);
 	}
 	else
 		args->num_of_must_eat = 0;
 	return (0);
 }
-
