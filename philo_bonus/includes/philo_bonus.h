@@ -27,6 +27,8 @@
 # define ERR_SEM_OPEN "[Error] Unable to create semaphore"
 # define ERR_SEM_POST "[Error] Unable to post semaphore"
 # define ERR_SEM_WAIT "[Error] Unable to wait semaphore"
+# define ERR_THREAD_CREATE "[Error] Unable to craete thread"
+# define ERR_THREAD_JOIN "[Error] Unable to join thread"
 
 // 1 milliseconds is equal to 1000 microseconds
 # define USEC_TO_MSEC 1000
@@ -82,10 +84,9 @@ typedef struct s_philo
 	size_t	philo_index;
 	t_time	time_last_eat;
 	int		num_of_current_eat;
-	bool	is_simulation_stop;
-	bool	is_philo_success;
 }	t_philo;
 
+// semaphore management
 typedef struct s_sems
 {
 	sem_t	*log_sem;
@@ -100,6 +101,7 @@ typedef enum e_log_type
 	LOG_EAT = 1,
 	LOG_SLEEP = 2,
 	LOG_THINK = 3,
+	LOG_DIE = 4,
 }	t_log_type;
 
 // cmdline_args.c
@@ -119,6 +121,19 @@ void	sem_deallocate_all_sems(t_sems *sems, size_t num_of_philo);
 // sem_wrap.c
 void	ft_sem_post(sem_t *sem);
 void	ft_sem_wait(sem_t *sem);
+
+// philo_action.c
+void	philo_wait_forks(t_philo *philo);
+void	philo_release_forks(t_philo *philo);
+void	philo_eat(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+void	philo_think(t_philo *philo);
+
+// philo_action2.c
+void	print_log(t_philo *philo, t_log_type log_type, t_time log_time);
+
+// philo_do_proc.c
+void	do_philo_proc(size_t index, t_args *arg, t_sems *sem);
 
 // time.c
 t_time	get_current_time_in_usec(void);

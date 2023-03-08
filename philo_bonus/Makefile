@@ -5,10 +5,19 @@ OBJS_DIR := ./objs
 
 SRCS := main.c \
 		cmdline_args.c \
-		ft_atoi.c \
-		ft_put_some.c \
-		time.c \
 		validate_args.c \
+		sem_create.c \
+		sem_allocate.c \
+		sem_wrap.c \
+		philo_action.c \
+		philo_action2.c \
+		philo_do_proc.c \
+		time.c \
+		ft_atoi.c \
+		ft_itoa.c \
+		ft_calloc.c \
+		ft_strjoin.c \
+		ft_put_some.c \
 
 OBJS := $(SRCS:.c=.o)
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
