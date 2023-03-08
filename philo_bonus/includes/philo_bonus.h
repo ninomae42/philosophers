@@ -104,4 +104,10 @@ t_time	get_time_diff(t_philo *philo);
 void	ft_usleep(unsigned int usec);
 void	ft_msleep(unsigned int msec);
 
+// ft_calloc.c
+void	*ft_calloc(size_t count, size_t size);
+
+// ft_itoa.c
+char	*ft_itoa(int n);
+
 #endif
