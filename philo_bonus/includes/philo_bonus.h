@@ -81,21 +81,12 @@ typedef enum e_log_type
 	LOG_THINK = 3,
 }	t_log_type;
 
-
-// ft_atoi.c
-int		ft_atoi(const char *str);
-
-// ft_put_some.c
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_puterr(char *err_msg);
-void	ft_puterr_exit(char *err_msg);
-
 // cmdline_args.c
 void	parse_cmdline_arguments(int argc, char **argv, t_args *args);
 
 // validate_args.c
 void	validate_arguments(int argc);
+
 
 // time.c
 t_time	get_current_time_in_usec(void);
@@ -109,5 +100,18 @@ void	*ft_calloc(size_t count, size_t size);
 
 // ft_itoa.c
 char	*ft_itoa(int n);
+
+// ft_strjoin.c
+char	*ft_strjoin(char const *s1, char const *s2);
+
+// ft_atoi.c
+int		ft_atoi(const char *str);
+
+// ft_put_some.c
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_puterr(char *err_msg);
+void	ft_puterr_exit(char *err_msg);
+size_t	ft_strlen(char *s);
 
 #endif
