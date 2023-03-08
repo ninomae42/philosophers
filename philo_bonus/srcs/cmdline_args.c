@@ -27,7 +27,7 @@ void	parse_cmdline_arguments(int argc, char **argv, t_args *args)
 
 static int	is_each_arguments_valid(t_args *args)
 {
-	if (args->num_of_philo < 0 || args->time_to_die < 0
+	if (args->num_of_philo < 1 || args->time_to_die < 0
 		|| args->time_to_eat < 0 || args->time_to_sleep < 0
 		|| args->num_of_must_eat < 0)
 		return (1);
