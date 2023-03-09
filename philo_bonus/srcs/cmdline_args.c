@@ -21,18 +21,24 @@ void	parse_cmdline_arguments(int argc, char **argv, t_args *args)
 			ft_puterr(ERR_ARG_NEGATIVE);
 		else if (res == 2)
 			ft_puterr(ERR_ARG_PHILO_NUM);
+		else if (res == 3)
+			ft_puterr(ERR_ARG_TIME);
 		exit(EXIT_FAILURE);
 	}
 }
 
 static int	is_each_arguments_valid(t_args *args)
 {
-	if (args->num_of_philo < 1 || args->time_to_die < 0
-		|| args->time_to_eat < 0 || args->time_to_sleep < 0
-		|| args->num_of_must_eat < 0)
+	if (args->time_to_die < 0 || args->time_to_eat < 0
+		|| args->time_to_sleep < 0 || args->num_of_must_eat < 0)
 		return (1);
-	if (MAX_PHILO_NUM < args->num_of_philo)
+	if (args->num_of_philo < MIN_PHILO_NUM
+		|| MAX_PHILO_NUM < args->num_of_philo)
 		return (2);
+	if (MAX_TIME_DURATION < args->time_to_die
+		|| MAX_TIME_DURATION < args->time_to_eat
+		|| MAX_TIME_DURATION < args->time_to_sleep)
+		return (3);
 	return (0);
 }
 

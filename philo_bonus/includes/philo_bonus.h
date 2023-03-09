@@ -21,7 +21,8 @@
 // Error Messages
 # define ERR_ARG_FORMAT "[Error] Unable to convert some arguments to integer"
 # define ERR_ARG_NEGATIVE "[Error] Each arguments must be positive integer"
-# define ERR_ARG_PHILO_NUM "[Error] Num of philos must be less than equal 200"
+# define ERR_ARG_PHILO_NUM "[Error] Num of philos must be 1 <= num <= 200"
+# define ERR_ARG_TIME "[Error] Max time duration is less than equal to 10000"
 # define ERR_FORK "[Error] Unable to fork process"
 # define ERR_KILL "[Error] Unable to kill signal"
 # define ERR_MEM "[Error] Unable to allocate memory"
@@ -42,7 +43,9 @@
 # define SEC_TO_MSEC 1000
 
 // Program constraints
+# define MIN_PHILO_NUM 1
 # define MAX_PHILO_NUM 200
+# define MAX_TIME_DURATION 10000
 
 // Monitoring interval
 # define MONITOR_INTERVAL 500
