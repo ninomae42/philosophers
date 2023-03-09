@@ -22,7 +22,6 @@ void	sem_allocate_all_sems(t_sems *sems, int num_of_philo)
 	size_t	num_left_fork;
 	size_t	num_right_fork;
 
-	sems->philo_access_sems = sem_allocate_all_access_sems(num_of_philo);
 	sems->log_sem = sem_create(PHILO_LOG, 1);
 	num_right_fork = num_of_philo / 2;
 	num_left_fork = num_of_philo / 2;
@@ -30,6 +29,7 @@ void	sem_allocate_all_sems(t_sems *sems, int num_of_philo)
 		num_left_fork = num_left_fork + 1;
 	sems->fork_left_sem = sem_create(PHILO_LEFT_FORK, num_left_fork);
 	sems->fork_right_sem = sem_create(PHILO_RIGHT_FORK, num_right_fork);
+	sems->philo_access_sems = sem_allocate_all_access_sems(num_of_philo);
 }
 
 void	sem_deallocate_all_sems(t_sems *sems, size_t num_of_philo)
