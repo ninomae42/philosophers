@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:55:56 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:55:56 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:15:39 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	set_initial_state(t_philo *philo)
 {
 	if (pthread_mutex_lock(&(philo->access_mutex)) != 0)
 		return (1);
-	philo->last_eat_time_in_usec = get_current_time_in_usec();
+	philo->last_eat_time = get_current_time_in_msec();
 	philo->status = STATUS_RUNNING;
 	if (pthread_mutex_unlock(&(philo->access_mutex)) != 0)
 		return (1);

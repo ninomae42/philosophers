@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:55:24 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:55:24 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:15:12 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	init_philos(t_info *info)
 	{
 		info->philos[i].id = i + 1;
 		info->philos[i].eat_cnt = 0;
-		info->philos[i].last_eat_time_in_usec = 0;
+		info->philos[i].last_eat_time = 0;
 		info->philos[i].syslog_mutex = &(info->syslog_mutex);
 		info->philos[i].info = info;
 		info->philos[i].status = STATUS_INIT;
