@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:52:45 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/10 20:27:01 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:12:28 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 # define MAX_TIME_DURATION 10000
 
 // Monitoring interval
-# define MONITOR_INTERVAL 500
+# define MONITOR_INTERVAL 5
 
 // Semaphore Names
 # define PHILO_LOG "/sem_syslog"

@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:39 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/10 20:20:15 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:12:36 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ static void	*routine_monitor(void *args)
 			exit(EXIT_FAILURE);
 		}
 		ft_sem_post(philo->access_sem);
-		// ft_msleep(MONITOR_INTERVAL);
-		ft_msleep(5);
+		ft_msleep(MONITOR_INTERVAL);
 	}
 	return (args);
 }
