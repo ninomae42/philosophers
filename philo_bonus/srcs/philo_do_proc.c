@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:39 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:53:39 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:50:58 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	*routine_monitor(void *args)
 		if (philo->time_last_eat != 0
 			&& philo->time_to_die < get_time_diff(philo))
 		{
-			print_log(philo, LOG_DIE, get_current_time_in_msec());
+			print_log(philo, LOG_DIE);
 			ft_sem_post(philo->access_sem);
 			exit(EXIT_FAILURE);
 		}
