@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:39 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/10 19:50:58 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 20:20:15 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static void	*routine_monitor(void *args)
 			exit(EXIT_FAILURE);
 		}
 		ft_sem_post(philo->access_sem);
-		ft_usleep(MONITOR_INTERVAL);
+		// ft_msleep(MONITOR_INTERVAL);
+		ft_msleep(5);
 	}
 	return (args);
 }
@@ -106,8 +107,8 @@ static void	philo_set_infos(
 	philo->time_to_sleep = arg->time_to_sleep;
 	philo->num_of_must_eat = arg->num_of_must_eat;
 	philo->log_sem = sem->log_sem;
-	philo->fork_left_sem = sem->fork_left_sem;
-	philo->fork_right_sem = sem->fork_right_sem;
+	philo->fork_sem = sem->fork_sem;
+	philo->pre_fork_sem = sem->pre_fork_sem;
 	philo->access_sem = sem->philo_access_sems[index - 1];
 	philo->philo_index = index;
 	philo->time_last_eat = 0;

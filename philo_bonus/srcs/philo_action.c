@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:30 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/10 19:49:03 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 20:00:51 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,18 @@ void	philo_wait_forks(t_philo *philo)
 	if (philo->num_of_must_eat != 0
 		&& philo->num_of_must_eat <= philo->num_of_current_eat)
 		exit(EXIT_SUCCESS);
-	ft_sem_wait(philo->fork_left_sem);
+	ft_sem_wait(philo->pre_fork_sem);
+	ft_sem_wait(philo->fork_sem);
 	print_log(philo, LOG_FORK);
-	ft_sem_wait(philo->fork_right_sem);
+	ft_sem_wait(philo->fork_sem);
 	print_log(philo, LOG_FORK);
 }
 
 void	philo_release_forks(t_philo *philo)
 {
-	ft_sem_post(philo->fork_right_sem);
-	ft_sem_post(philo->fork_left_sem);
+	ft_sem_post(philo->fork_sem);
+	ft_sem_post(philo->pre_fork_sem);
+	ft_sem_post(philo->fork_sem);
 }
 
 void	philo_eat(t_philo *philo)

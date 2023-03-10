@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:52:45 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/10 19:45:48 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 20:27:01 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@
 
 // Semaphore Names
 # define PHILO_LOG "/sem_syslog"
-# define PHILO_RIGHT_FORK "/sem_right_fork"
-# define PHILO_LEFT_FORK "/sem_left_fork"
+# define PHILO_FORK "/sem_fork"
+# define PHILO_PRE_FORK "/sem_pre_fork"
 # define PHILO_ACCESS_SEM_PREFIX "/sem_sync"
 
 // --- Types ---
@@ -92,8 +92,8 @@ typedef struct s_philo
 	int		num_of_must_eat;
 
 	sem_t	*log_sem;
-	sem_t	*fork_left_sem;
-	sem_t	*fork_right_sem;
+	sem_t	*fork_sem;
+	sem_t	*pre_fork_sem;
 
 	sem_t	*access_sem;
 	size_t	philo_index;
@@ -107,8 +107,8 @@ typedef struct s_philo
 typedef struct s_sems
 {
 	sem_t	*log_sem;
-	sem_t	*fork_left_sem;
-	sem_t	*fork_right_sem;
+	sem_t	*fork_sem;
+	sem_t	*pre_fork_sem;
 	sem_t	**philo_access_sems;
 }	t_sems;
 
