@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:52:45 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:52:45 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:12:28 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@
 # define MAX_TIME_DURATION 10000
 
 // Monitoring interval
-# define MONITOR_INTERVAL 500
+# define MONITOR_INTERVAL 5
 
 // Semaphore Names
 # define PHILO_LOG "/sem_syslog"
-# define PHILO_RIGHT_FORK "/sem_right_fork"
-# define PHILO_LEFT_FORK "/sem_left_fork"
+# define PHILO_FORK "/sem_fork"
+# define PHILO_PRE_FORK "/sem_pre_fork"
 # define PHILO_ACCESS_SEM_PREFIX "/sem_sync"
 
 // --- Types ---
@@ -92,8 +92,8 @@ typedef struct s_philo
 	int		num_of_must_eat;
 
 	sem_t	*log_sem;
-	sem_t	*fork_left_sem;
-	sem_t	*fork_right_sem;
+	sem_t	*fork_sem;
+	sem_t	*pre_fork_sem;
 
 	sem_t	*access_sem;
 	size_t	philo_index;
@@ -107,8 +107,8 @@ typedef struct s_philo
 typedef struct s_sems
 {
 	sem_t	*log_sem;
-	sem_t	*fork_left_sem;
-	sem_t	*fork_right_sem;
+	sem_t	*fork_sem;
+	sem_t	*pre_fork_sem;
 	sem_t	**philo_access_sems;
 }	t_sems;
 
@@ -147,7 +147,7 @@ void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
 
 // philo_action2.c
-void	print_log(t_philo *philo, t_log_type log_type, t_time log_time);
+void	print_log(t_philo *philo, t_log_type log_type);
 
 // philo_do_proc.c
 void	do_philo_proc(size_t index, t_args *arg, t_sems *sem);

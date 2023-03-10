@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:56:06 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:56:06 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:25:11 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ long long	get_time_difference(t_philo *philo)
 {
 	long long	difference;
 
-	difference = get_current_time_in_usec() - philo->last_eat_time_in_usec;
+	difference = get_current_time_in_msec() - philo->last_eat_time;
 	return (difference);
 }

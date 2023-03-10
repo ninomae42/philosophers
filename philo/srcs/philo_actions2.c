@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:55:47 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:55:48 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:33:04 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	take_left_fork(t_philo *philo)
 {
 	if (pthread_mutex_lock(philo->left_fork) != 0)
 		return (1);
-	if (print_philo_log(philo, LOG_FORK, 0) != 0)
+	if (print_philo_log(philo, LOG_FORK) != 0)
 	{
 		if (pthread_mutex_unlock(philo->left_fork) != 0)
 			return (1);
@@ -29,7 +29,7 @@ int	take_right_fork(t_philo *philo)
 {
 	if (pthread_mutex_lock(philo->right_fork) != 0)
 		return (1);
-	if (print_philo_log(philo, LOG_FORK, 0) != 0)
+	if (print_philo_log(philo, LOG_FORK) != 0)
 	{
 		if (pthread_mutex_unlock(philo->right_fork) != 0)
 			return (1);

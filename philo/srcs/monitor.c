@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:55:31 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:55:31 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:26:25 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ static bool	is_any_philo_dead(t_info *info)
 		pthread_mutex_lock(&(info->philos[i].access_mutex));
 		if (info->philos[i].status == STATUS_RUNNING)
 		{
-			if (info->time_to_die * MSEC_TO_USEC
-				< get_time_difference(&(info->philos[i])))
+			if (info->time_to_die < get_time_difference(&(info->philos[i])))
 			{
 				pthread_mutex_lock(&(info->syslog_mutex));
 				printf("%lld %zu died\n", get_current_time_in_msec(), i + 1);

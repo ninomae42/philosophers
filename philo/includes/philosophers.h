@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:55:03 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:55:03 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:32:15 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_philo
 	pthread_mutex_t	*syslog_mutex;
 	t_fork			*right_fork;
 	t_fork			*left_fork;
-	long long		last_eat_time_in_usec;
+	long long		last_eat_time;
 	size_t			eat_cnt;
 	t_info			*info;
 	int				status;
@@ -98,7 +98,7 @@ int		join_philo_threads(t_info *info);
 
 // thread_utils.c
 int		detach_all_threads(t_info *info, size_t n);
-int		print_philo_log(t_philo *philo, int log_type, long long current_time);
+int		print_philo_log(t_philo *philo, int log_type);
 
 // philo_threads_routine.c
 void	*routine_philo(void *arg);
