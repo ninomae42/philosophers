@@ -6,24 +6,32 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:43 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:53:44 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/12 23:57:28 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void		terminate_procs(pid_t *pid, size_t proc_num);
-static pid_t	*make_procs(size_t proc_num, t_args *arg, t_sems *sem);
-static int		wait_procs(pid_t *pid, size_t proc_num);
+static void	terminate_procs(pid_t *pid, size_t proc_num);
+static int	make_procs(size_t proc_num, t_args *arg, t_sems *sem, pid_t *pid);
+static int	wait_procs(pid_t *pid, size_t proc_num);
 
 int	make_wait_procs(t_args *arg, t_sems *sem)
 {
 	int		res;
 	pid_t	*pids;
 
-	pids = make_procs(arg->num_of_philo, arg, sem);
+	pids = (pid_t *)malloc(sizeof(pid_t) * arg->num_of_philo);
 	if (pids == NULL)
+	{
+		ft_puterr(ERR_MEM);
 		return (1);
+	}
+	if (make_procs(arg->num_of_philo, arg, sem, pids) < 0)
+	{
+		free(pids);
+		return (1);
+	}
 	res = wait_procs(pids, arg->num_of_philo);
 	free(pids);
 	if (res != 0)
@@ -31,30 +39,12 @@ int	make_wait_procs(t_args *arg, t_sems *sem)
 	return (0);
 }
 
-static void	terminate_procs(pid_t *pid, size_t proc_num)
+static int	make_procs(
+		size_t proc_num, t_args *arg, t_sems *sem, pid_t *pid)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < proc_num)
-	{
-		kill(pid[i], SIGTERM);
-		i++;
-	}
-}
-
-static pid_t	*make_procs(size_t proc_num, t_args *arg, t_sems *sem)
-{
-	size_t	i;
-	pid_t	*pid;
-
-	i = 0;
-	pid = (pid_t *)malloc(sizeof(pid_t) * proc_num);
-	if (pid == NULL)
-	{
-		ft_puterr(ERR_MEM);
-		return (NULL);
-	}
 	while (i < proc_num)
 	{
 		pid[i] = fork();
@@ -62,13 +52,16 @@ static pid_t	*make_procs(size_t proc_num, t_args *arg, t_sems *sem)
 		{
 			ft_puterr(ERR_FORK);
 			terminate_procs(pid, i);
-			return (NULL);
+			return (-1);
 		}
 		else if (pid[i] == 0)
+		{
+			free(pid);
 			do_philo_proc(i + 1, arg, sem);
+		}
 		i++;
 	}
-	return (pid);
+	return (0);
 }
 
 static int	wait_procs(pid_t *pid, size_t proc_num)
@@ -93,4 +86,16 @@ static int	wait_procs(pid_t *pid, size_t proc_num)
 		i++;
 	}
 	return (0);
+}
+
+static void	terminate_procs(pid_t *pid, size_t proc_num)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < proc_num)
+	{
+		kill(pid[i], SIGTERM);
+		i++;
+	}
 }

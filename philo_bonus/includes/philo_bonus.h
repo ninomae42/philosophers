@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:52:45 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/10 21:12:28 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/12 23:10:20 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ typedef struct s_philo
 	size_t	philo_index;
 	t_time	time_last_eat;
 	int		num_of_current_eat;
+	bool	is_simulation_stop;
+	bool	is_simulation_success;
 
 	time_t	start_interval;
 }	t_philo;
@@ -140,17 +142,24 @@ void	ft_sem_post(sem_t *sem);
 void	ft_sem_wait(sem_t *sem);
 
 // philo_action.c
-void	philo_wait_forks(t_philo *philo);
+int		philo_wait_forks(t_philo *philo);
 void	philo_release_forks(t_philo *philo);
-void	philo_eat(t_philo *philo);
-void	philo_sleep(t_philo *philo);
-void	philo_think(t_philo *philo);
+int		philo_eat(t_philo *philo);
+int		philo_sleep(t_philo *philo);
+int		philo_think(t_philo *philo);
 
 // philo_action2.c
-void	print_log(t_philo *philo, t_log_type log_type);
+int		print_log(t_philo *philo, t_log_type log_type);
 
 // philo_do_proc.c
 void	do_philo_proc(size_t index, t_args *arg, t_sems *sem);
+
+// philo_main_routine.c
+void	*routine_monitor(void *args);
+
+// philo_monitor_routine.c
+void	*routine_philo(void *args);
+void	*routine_single_philo(void *args);
 
 // procs.c
 int		make_wait_procs(t_args *arg, t_sems *sem);
