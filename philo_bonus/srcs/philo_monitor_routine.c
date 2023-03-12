@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 00:51:21 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/13 00:51:22 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/13 05:44:19 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*routine_monitor(void *args)
 static bool	is_philo_finish_eat(t_philo *philo)
 {
 	ft_sem_wait(philo->access_sem);
-	if (philo->num_of_must_eat <= philo->num_of_current_eat)
+	if (philo->num_of_must_eat < philo->num_of_current_eat)
 	{
 		philo->is_simulation_stop = true;
 		philo->is_simulation_success = true;
