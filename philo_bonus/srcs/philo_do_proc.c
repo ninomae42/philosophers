@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:39 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/12 23:10:26 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:43:20 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	philo_set_infos(t_philo *philo,
 				size_t index, t_args *arg, t_sems *sem);
+static void	create_philo_thread(
+				t_philo *philo, pthread_t *thread, size_t num_philo);
 
 void	do_philo_proc(size_t index, t_args *arg, t_sems *sem)
 {
@@ -24,23 +26,30 @@ void	do_philo_proc(size_t index, t_args *arg, t_sems *sem)
 	philo_set_infos(&philo, index, arg, sem);
 	if (pthread_create(&thread_monitor, NULL, routine_monitor, &philo) != 0)
 		ft_puterr_exit(ERR_THREAD_CREATE);
-	if (arg->num_of_philo == 1)
-	{
-		if (pthread_create(&thread_philo, NULL, routine_single_philo, &philo) != 0)
-			ft_puterr_exit(ERR_THREAD_CREATE);
-	}
-	else
-	{
-		if (pthread_create(&thread_philo, NULL, routine_philo, &philo) != 0)
-			ft_puterr_exit(ERR_THREAD_CREATE);
-	}
+	create_philo_thread(&philo, &thread_philo, arg->num_of_philo);
 	if (pthread_join(thread_monitor, NULL) != 0)
 		ft_puterr_exit(ERR_THREAD_JOIN);
 	if (pthread_join(thread_philo, NULL) != 0)
 		ft_puterr_exit(ERR_THREAD_JOIN);
+	sem_deallocate_all_sems(sem, arg->num_of_philo);
 	if (!philo.is_simulation_success)
 		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);
+}
+
+static void	create_philo_thread(
+			t_philo *philo, pthread_t *thread, size_t num_philo)
+{
+	if (num_philo == 1)
+	{
+		if (pthread_create(thread, NULL, routine_single_philo, philo) != 0)
+			ft_puterr_exit(ERR_THREAD_CREATE);
+	}
+	else
+	{
+		if (pthread_create(thread, NULL, routine_philo, philo) != 0)
+			ft_puterr_exit(ERR_THREAD_CREATE);
+	}
 }
 
 static void	set_interval(t_philo *philo)
