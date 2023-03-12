@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:55:24 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/10 19:15:12 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/13 02:58:37 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	set_fork_mutex(t_info *info, size_t i)
 {
 	if (i == (size_t)(info->num_of_philo - 1))
 	{
-		info->philos[i].left_fork = &(info->forks[i]);
-		info->philos[i].right_fork = &(info->forks[0]);
+		info->philos[i].right_fork = &(info->forks[i]);
+		info->philos[i].left_fork = &(info->forks[0]);
 	}
 	else
 	{
