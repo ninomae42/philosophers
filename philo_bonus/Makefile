@@ -12,6 +12,8 @@ SRCS := main.c \
 		philo_action.c \
 		philo_action2.c \
 		philo_do_proc.c \
+		philo_main_routine.c \
+		philo_monitor_routine.c \
 		procs.c \
 		time.c \
 		ft_atoi.c \
