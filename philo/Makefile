@@ -4,6 +4,7 @@ SRCS_DIR := ./srcs
 OBJS_DIR := ./objs
 
 SRCS := main.c \
+		cmdline_args.c \
 		ft_atoi.c \
 		ft_put_utils.c \
 

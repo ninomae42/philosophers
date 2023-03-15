@@ -11,6 +11,21 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+# define ERR_ARG_FORMAT "[Error] Unable to convert some arguments to integer"
+# define ERR_ARG_NEGATIVE "[Error] Each arguments must be positive integer"
+
+typedef struct s_info
+{
+	int	num_of_philo;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	num_of_must_eat;
+}	t_info;
+
+// cmdline_args.c
+int		parse_cmdline_arguments(int argc, char **argv, t_info *info);
+
 // ft_atoi.c
 int		ft_atoi(const char *str);
 
