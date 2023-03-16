@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:30 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/12 23:21:36 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/17 00:03:35 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ int	philo_think(t_philo *philo)
 {
 	if (print_log(philo, LOG_THINK) < 0)
 		return (-1);
+	ft_msleep(philo->time_to_think);
 	return (0);
 }

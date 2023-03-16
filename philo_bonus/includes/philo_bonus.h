@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:52:45 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/12 23:10:20 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/17 00:01:06 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_philo
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		num_of_must_eat;
+	int		time_to_think;
 
 	sem_t	*log_sem;
 	sem_t	*fork_sem;
