@@ -46,10 +46,10 @@ void	set_time_to_think(t_info *info, size_t i)
 	info->philos[i].time_to_think = 0;
 	if (info->num_of_philo % 2 == 0)
 		return ;
-
 	num_of_fork_sets = info->num_of_philo / 2;
 	eat_interval = info->time_to_eat / num_of_fork_sets;
-	time_to_think = eat_interval * info->num_of_philo - info->time_to_eat - info->time_to_sleep;
+	time_to_think = eat_interval * info->num_of_philo
+		- info->time_to_eat - info->time_to_sleep;
 	if (0 < time_to_think)
 		info->philos[i].time_to_think = time_to_think;
 }
