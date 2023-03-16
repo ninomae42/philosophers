@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:39 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/13 00:43:20 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/17 00:07:34 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,31 @@ static void	set_interval(t_philo *philo)
 		philo->start_interval = 0;
 		return ;
 	}
-	num_of_fork_sets = philo->num_of_philo / 2 + 1;
+	num_of_fork_sets = philo->num_of_philo / 2;
 	eat_interval = philo->time_to_eat / num_of_fork_sets;
 	total_interval = 0;
-	if (2 < philo->philo_index)
+	if (1 < philo->philo_index)
 		total_interval = eat_interval * (philo->philo_index / 2);
 	if (philo->philo_index % 2 == 0)
 		total_interval += philo->time_to_eat;
 	philo->start_interval = total_interval;
+}
+
+static void	set_time_to_think(t_philo *philo)
+{
+	t_time	time_to_think;
+	t_time	eat_interval;
+	size_t	num_of_fork_sets;
+
+	philo->time_to_think = 0;
+	if (philo->num_of_philo % 2 == 0)
+		return ;
+	num_of_fork_sets = philo->num_of_philo / 2;
+	eat_interval = philo->time_to_eat / num_of_fork_sets;
+	time_to_think = eat_interval * philo->num_of_philo
+		- philo->time_to_eat - philo->time_to_sleep;
+	if (0 < time_to_think)
+		philo->time_to_think = time_to_think;
 }
 
 static void	philo_set_infos(
@@ -91,4 +108,5 @@ static void	philo_set_infos(
 	philo->is_simulation_stop = false;
 	philo->is_simulation_success = false;
 	set_interval(philo);
+	set_time_to_think(philo);
 }
