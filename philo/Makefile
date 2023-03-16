@@ -5,7 +5,17 @@ OBJS_DIR := ./objs
 
 SRCS := main.c \
 		cmdline_args.c \
+		info_alloc.c \
+		mutex_init.c \
+		philo_action.c \
+		philo_action2.c \
+		philo_routine.c \
+		philo_set_info.c \
+		philo_thread_init.c \
+		philo_monitor.c \
+		time.c \
 		ft_atoi.c \
+		ft_malloc.c \
 		ft_put_utils.c \
 
 OBJS := $(SRCS:.c=.o)
@@ -16,9 +26,11 @@ INC_DIR := ./includes
 INCLUDES := $(addprefix -I, $(INC_DIR))
 
 CC := cc
-# CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
-# CFLAGS := -Wall -Wextra -Werror -g -fsanitize=thread
 CFLAGS := -Wall -Wextra -Werror
+# CFLAGS += -g
+# CFLAGS += -fsanitize=undefined
+# CFLAGS += -fsanitize=address
+# CFLAGS := -Wall -Wextra -Werror -g -fsanitize=thread
 LDFLAGS := -lpthread
 RM := rm -rf
 

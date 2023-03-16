@@ -2,14 +2,23 @@
 
 int	main(int argc, char **argv)
 {
-	t_info	info;
+	t_info		info;
+	pthread_t	monitor;
 
 	if (parse_cmdline_arguments(argc, argv, &info) != 0)
 		return (EXIT_FAILURE);
-	printf("num_of_philo: %d\n", info.num_of_philo);
-	printf("time_to_die: %d\n", info.time_to_die);
-	printf("time_to_eat: %d\n", info.time_to_eat);
-	printf("time_to_sleep: %d\n", info.time_to_sleep);
-	printf("num_of_must_eat: %d\n", info.num_of_must_eat);
+	if (allocate_philo_and_fork(&info) != 0)
+		return (EXIT_FAILURE);
+	if (init_all_mutex(&info) < 0)
+		return (EXIT_FAILURE);
+	set_philo_info(&info);
+	if (create_philo_thread(&info) != 0)
+		return (EXIT_FAILURE);
+	if (create_and_join_monitor_thread(&info, &monitor) != 0)
+		return (EXIT_FAILURE);
+	if (join_philo_threads(&info) != 0)
+		return (EXIT_FAILURE);
+	destroy_all_mutex(&info);
+	deallocate_philo_and_fork(&info);
 	return (EXIT_SUCCESS);
 }
