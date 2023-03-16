@@ -5,45 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 19:55:39 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:55:40 by tashimiz         ###   ########.fr       */
+/*   Created: 2023/03/16 23:25:37 by tashimiz          #+#    #+#             */
+/*   Updated: 2023/03/16 23:25:38 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int	init_sys_mutex(t_info *info);
-static int	init_fork_mutexes(t_info *info);
-static int	init_philo_mutexes(t_info *info);
+static int	ft_mutex_init(pthread_mutex_t *mutex);
+static int	init_mutexes(pthread_mutex_t *mutex, size_t num);
+static void	destroy_mutexes(pthread_mutex_t *mutex, size_t num);
 
-int	init_all_mutexes(t_info *info)
+int	init_all_mutex(t_info *info)
 {
-	if (init_sys_mutex(info) != 0)
+	if (ft_mutex_init(&(info->syslog_mutex)) != 0)
 	{
-		free_global_info(info);
+		deallocate_philo_and_fork(info);
 		return (1);
 	}
-	if (init_fork_mutexes(info) != 0)
+	if (init_mutexes(info->forks, info->num_of_philo) != 0)
 	{
 		if (pthread_mutex_destroy(&(info->syslog_mutex)) != 0)
 			ft_puterr(ERR_MTX_DESTROY);
-		free_global_info(info);
+		deallocate_philo_and_fork(info);
 		return (1);
 	}
-	if (init_philo_mutexes(info) != 0)
+	if (init_mutexes(info->access_mutexes, info->num_of_philo) != 0)
 	{
 		if (pthread_mutex_destroy(&(info->syslog_mutex)) != 0)
 			ft_puterr(ERR_MTX_DESTROY);
-		destroy_fork_mutexes(info->forks, info->num_of_philo);
-		free_global_info(info);
+		destroy_mutexes(info->forks, info->num_of_philo);
+		deallocate_philo_and_fork(info);
 		return (1);
 	}
 	return (0);
 }
 
-static int	init_sys_mutex(t_info *info)
+void	destroy_all_mutex(t_info *info)
 {
-	if (pthread_mutex_init(&(info->syslog_mutex), NULL) != 0)
+	if (pthread_mutex_destroy(&(info->syslog_mutex)) != 0)
+		ft_puterr(ERR_MTX_DESTROY);
+	destroy_mutexes(info->access_mutexes, info->num_of_philo);
+	destroy_mutexes(info->forks, info->num_of_philo);
+}
+
+static int	ft_mutex_init(pthread_mutex_t *mutex)
+{
+	if (pthread_mutex_init(mutex, NULL) != 0)
 	{
 		ft_puterr(ERR_MTX_INIT);
 		return (1);
@@ -51,42 +59,32 @@ static int	init_sys_mutex(t_info *info)
 	return (0);
 }
 
-static int	init_fork_mutexes(t_info *info)
+static int	init_mutexes(pthread_mutex_t *mutex, size_t num)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < (size_t)info->num_of_philo)
+	while (i < num)
 	{
-		if (pthread_mutex_init(&(info->forks[i]), NULL) != 0)
-			break ;
+		if (ft_mutex_init(&mutex[i]) != 0)
+		{
+			destroy_mutexes(mutex, i);
+			return (1);
+		}
 		i++;
-	}
-	if (i != (size_t)info->num_of_philo)
-	{
-		ft_puterr(ERR_MTX_INIT);
-		destroy_fork_mutexes(info->forks, i);
-		return (1);
 	}
 	return (0);
 }
 
-static int	init_philo_mutexes(t_info *info)
+static void	destroy_mutexes(pthread_mutex_t *mutex, size_t num)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < (size_t)info->num_of_philo)
+	while (i < num)
 	{
-		if (pthread_mutex_init(&(info->philos[i].access_mutex), NULL) != 0)
-			break ;
+		if (pthread_mutex_destroy(mutex + i) != 0)
+			ft_puterr(ERR_MTX_DESTROY);
 		i++;
 	}
-	if (i != (size_t)info->num_of_philo)
-	{
-		ft_puterr(ERR_MTX_INIT);
-		destroy_philo_mutexes(info->philos, i);
-		return (1);
-	}
-	return (0);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 19:55:27 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:55:28 by tashimiz         ###   ########.fr       */
+/*   Created: 2023/03/16 23:25:32 by tashimiz          #+#    #+#             */
+/*   Updated: 2023/03/16 23:25:33 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,23 @@
 
 int	main(int argc, char **argv)
 {
-	t_info		*info;
+	t_info		info;
 	pthread_t	monitor;
 
-	info = init_global_info(argc, argv);
-	if (info == NULL)
+	if (parse_cmdline_arguments(argc, argv, &info) != 0)
 		return (EXIT_FAILURE);
-	if (allocate_philo_and_fork(info) != 0)
+	if (allocate_philo_and_fork(&info) != 0)
 		return (EXIT_FAILURE);
-	if (init_all_mutexes(info) != 0)
+	if (init_all_mutex(&info) < 0)
 		return (EXIT_FAILURE);
-	init_philos(info);
-	if (create_philo_threads(info) != 0)
+	set_philo_info(&info);
+	if (create_philo_thread(&info) != 0)
 		return (EXIT_FAILURE);
-	if (create_join_monitor_thread(info, &monitor) != 0)
+	if (create_and_join_monitor_thread(&info, &monitor) != 0)
 		return (EXIT_FAILURE);
-	if (join_philo_threads(info) != 0)
+	if (join_philo_threads(&info) != 0)
 		return (EXIT_FAILURE);
-	destroy_all_mutexes(info);
-	free_global_info(info);
+	destroy_all_mutex(&info);
+	deallocate_philo_and_fork(&info);
 	return (EXIT_SUCCESS);
 }
