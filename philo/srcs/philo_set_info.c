@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:25:59 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/16 23:26:00 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/18 13:06:45 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	set_interval(t_info *info, size_t i)
 		return ;
 	}
 	num_of_fork_sets = info->num_of_philo / 2;
+	if (num_of_fork_sets == 0)
+		return ;
 	eat_interval = info->time_to_eat / num_of_fork_sets;
 	total_interval = 0;
 	if (1 < info->philos[i].id)
@@ -59,6 +61,8 @@ void	set_time_to_think(t_info *info, size_t i)
 	if (info->num_of_philo % 2 == 0)
 		return ;
 	num_of_fork_sets = info->num_of_philo / 2;
+	if (num_of_fork_sets == 0)
+		return ;
 	eat_interval = info->time_to_eat / num_of_fork_sets;
 	time_to_think = eat_interval * info->num_of_philo
 		- info->time_to_eat - info->time_to_sleep;
