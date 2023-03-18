@@ -6,7 +6,7 @@
 #    By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 23:26:35 by tashimiz          #+#    #+#              #
-#    Updated: 2023/03/16 23:26:36 by tashimiz         ###   ########.fr        #
+#    Updated: 2023/03/18 15:34:38 by tashimiz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ INCLUDES := $(addprefix -I, $(INC_DIR))
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 # CFLAGS += -g
+# CFLAGS += --analyze
 # CFLAGS += -fsanitize=undefined
 # CFLAGS += -fsanitize=address
 # CFLAGS := -Wall -Wextra -Werror -g -fsanitize=thread
