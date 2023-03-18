@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:03 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/09 19:53:04 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:59:09 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@ void	*ft_calloc(size_t count, size_t size)
 	void	*ret;
 
 	if (count == 0 || size == 0)
-	{
-		count = 0;
-		size = 0;
-	}
-	if (SIZE_MAX / count < size)
+		return (ft_calloc(1, 1));
+	if (size < count / SIZE_MAX)
 		return (NULL);
 	ret = malloc(size * count);
 	if (ret == NULL)

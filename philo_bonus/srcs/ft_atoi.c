@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:25:14 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/17 00:24:58 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:19:04 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	ft_atoi(const char *str)
 	long	sign;
 	bool	is_err;
 
-	ret = 0;
 	sign = 1;
 	while (ft_isspace(*str))
 		str++;
