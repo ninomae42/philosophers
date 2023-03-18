@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:25:54 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/16 23:25:55 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:53:17 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	*routine_single_philo(void *args)
 			pthread_mutex_unlock(philo->fork_right);
 			break ;
 		}
-		ft_msleep(philo->time_to_die * 2);
+		ft_msleep(philo->time_to_die / 2);
+		ft_msleep(philo->time_to_die / 2);
 		if (check_death_release_fork(philo) != 0)
 			break ;
 	}
