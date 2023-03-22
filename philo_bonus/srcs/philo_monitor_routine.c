@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 00:51:21 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/22 16:19:02 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:25:01 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static bool	is_philo_die(t_philo *philo)
 			philo->is_simulation_stop = true;
 			philo->is_simulation_success = false;
 			ft_sem_wait(philo->log_sem);
-			printf("[m]%lld %zu died\n",
+			printf("%lld %zu died\n",
 				get_current_time_in_msec(), philo->philo_index);
 		}
 		ft_sem_post(philo->access_sem);
