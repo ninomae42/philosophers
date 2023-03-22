@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:52:45 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/17 00:01:06 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:17:12 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int		philo_think(t_philo *philo);
 
 // philo_action2.c
 int		print_log(t_philo *philo, t_log_type log_type);
+bool	philo_is_philo_dead(t_philo *philo);
 
 // philo_do_proc.c
 void	do_philo_proc(size_t index, t_args *arg, t_sems *sem);

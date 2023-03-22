@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 00:51:21 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/13 05:44:19 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:19:02 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	*routine_monitor(void *args)
 static bool	is_philo_finish_eat(t_philo *philo)
 {
 	ft_sem_wait(philo->access_sem);
+	if (philo->is_simulation_stop && !philo->is_simulation_success)
+	{
+		ft_sem_post(philo->access_sem);
+		return (true);
+	}
 	if (philo->num_of_must_eat < philo->num_of_current_eat)
 	{
 		philo->is_simulation_stop = true;
@@ -55,11 +60,14 @@ static bool	is_philo_die(t_philo *philo)
 	if (philo->time_last_eat != 0
 		&& philo->time_to_die < get_time_diff(philo))
 	{
-		philo->is_simulation_stop = true;
-		philo->is_simulation_success = false;
-		ft_sem_wait(philo->log_sem);
-		printf("%lld %zu died\n",
-			get_current_time_in_msec(), philo->philo_index);
+		if (!philo->is_simulation_stop)
+		{
+			philo->is_simulation_stop = true;
+			philo->is_simulation_success = false;
+			ft_sem_wait(philo->log_sem);
+			printf("[m]%lld %zu died\n",
+				get_current_time_in_msec(), philo->philo_index);
+		}
 		ft_sem_post(philo->access_sem);
 		return (true);
 	}

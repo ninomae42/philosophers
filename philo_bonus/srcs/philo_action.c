@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:53:30 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/17 00:03:35 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:19:32 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	philo_release_forks(t_philo *philo)
 
 int	philo_eat(t_philo *philo)
 {
+	if (philo_is_philo_dead(philo))
+		return (-1);
 	if (print_log(philo, LOG_EAT) < 0)
 		return (-1);
 	ft_msleep(philo->time_to_eat);
