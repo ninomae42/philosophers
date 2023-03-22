@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:25:42 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/16 23:25:42 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:55:50 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	philo_wait_forks(t_philo *philo)
 	pthread_mutex_lock(philo->fork_right);
 	if (print_philo_log(philo, LOG_FORK) != 0)
 	{
-		pthread_mutex_unlock(philo->fork_left);
 		pthread_mutex_unlock(philo->fork_right);
+		pthread_mutex_unlock(philo->fork_left);
 		return (1);
 	}
 	return (0);
@@ -32,18 +32,23 @@ int	philo_wait_forks(t_philo *philo)
 
 void	philo_release_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->fork_left);
 	pthread_mutex_unlock(philo->fork_right);
+	pthread_mutex_unlock(philo->fork_left);
 }
 
 int	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->access_mutex);
+	if (philo_is_philo_dead(philo))
+	{
+		pthread_mutex_unlock(philo->access_mutex);
+		philo_release_forks(philo);
+		return (1);
+	}
 	if (print_philo_log(philo, LOG_EAT) != 0)
 	{
 		pthread_mutex_unlock(philo->access_mutex);
-		pthread_mutex_unlock(philo->fork_right);
-		pthread_mutex_unlock(philo->fork_left);
+		philo_release_forks(philo);
 		return (1);
 	}
 	philo->eat_cnt++;

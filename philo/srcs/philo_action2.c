@@ -6,7 +6,7 @@
 /*   By: tashimiz <tashimiz@student.42tokyo.jp      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 23:25:46 by tashimiz          #+#    #+#             */
-/*   Updated: 2023/03/16 23:25:47 by tashimiz         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:54:51 by tashimiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,20 @@ int	print_philo_log(t_philo *philo, t_log_type log_type)
 	}
 	pthread_mutex_unlock(philo->syslog_mutex);
 	return (0);
+}
+
+bool	philo_is_philo_dead(t_philo *philo)
+{
+	if (philo->time_to_die < get_time_diff(philo))
+	{
+		pthread_mutex_lock(philo->syslog_mutex);
+		if (!philo->info->is_simulation_stop)
+		{
+			printf("[p]%lld %zu died\n", get_current_time_in_msec(), philo->id);
+			philo->info->is_simulation_stop = true;
+		}
+		pthread_mutex_unlock(philo->syslog_mutex);
+		return (true);
+	}
+	return (false);
 }
